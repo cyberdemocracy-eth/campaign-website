@@ -17,7 +17,7 @@ on:
 jobs:
     build-and-deploy:
         runs-on: ubuntu-latest
-        environment: production  # Use environment secrets
+        # Secrets should be in Repository secrets, not Environment secrets
         outputs:
             cid: ${{ steps.deploy.outputs.cid }}
         steps:
