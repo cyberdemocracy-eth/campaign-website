@@ -1,0 +1,48 @@
+# Jekyll Configuration for CyberDemocracy.ETH
+title: "CyberDemocracy.ETH - Iran's Digital Civic Defense"
+description: "72-Hour Emergency Call: Activate Iran's Digital Civic Defense Under R2P"
+url: "" # Leave empty for IPFS compatibility
+baseurl: "" # Leave empty for IPFS compatibility
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+
+# Theme configuration
+# Using minimal theme for IPFS compatibility (no external resources)
+plugins: []
+
+# Exclude from build
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - README.md
+  - .github
+  - "*.sh"
+
+# Include files
+include:
+  - _pages
+
+# Default layout
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: default
+
+# Collections
+collections:
+  pages:
+    output: true
+    permalink: /:path/
+
+# IPFS compatibility - use relative URLs
+relative_permalinks: false
+
+# Ensure all assets use relative paths for IPFS
+assets:
+  compress:
+    js: false
+    css: false

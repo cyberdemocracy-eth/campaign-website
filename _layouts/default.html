@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ page.title | default: site.title }}</title>
+  <meta name="description" content="{{ page.description | default: site.description }}">
+  
+  <!-- Open Graph / Social -->
+  <meta property="og:title" content="{{ page.title | default: site.title }}">
+  <meta property="og:description" content="{{ page.description | default: site.description }}">
+  <meta property="og:type" content="website">
+  
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{{ page.title | default: site.title }}">
+  <meta name="twitter:description" content="{{ page.description | default: site.description }}">
+  
+  <style>
+    /* Style Book: Minimal-Progressive Design System */
+    /* 8px grid, Material Design inspired */
+    
+    :root {
+      /* Color Palette from Style Book */
+      --sky-blue: #8CD5F5;        /* Openness, transparency, connection */
+      --sky-blue-light: #CCDAF5;  /* Energy, action, hope */
+      --mist-gray: #F6F7F7;       /* Clean, inclusive */
+      --sand-beige: #EDE367;      /* Human warmth, growth */
+      --soft-green: #A8BA81;      /* Collaboration, growth */
+      --navy-gray: #233AA1;       /* Trust, depth, balance */
+      
+      /* Applied colors - dark theme adaptation */
+      --bg-primary: #0a0a0a;
+      --bg-secondary: #111111;
+      --bg-card: #141414;
+      --text-primary: var(--mist-gray);
+      --text-secondary: rgba(246, 247, 247, 0.65);
+      --accent-green: var(--soft-green);
+      --accent-red: #ef4444;
+      --accent-gold: var(--sand-beige);
+      --accent-blue: var(--sky-blue);
+      --border-color: rgba(35, 58, 161, 0.14); /* Navy Gray 14% */
+      
+      /* Spacing scale: 4, 8, 12, 16, 24, 32, 40, 48, 64, 80, 96, 128 */
+      --space-1: 4px;
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --space-5: 24px;
+      --space-6: 32px;
+      --space-7: 40px;
+      --space-8: 48px;
+      --space-9: 64px;
+      --space-10: 80px;
+      
+      /* Radius */
+      --radius-card: 16px;
+      --radius-button: 12px;
+      --radius-tag: 999px;
+      --radius-modal: 20px;
+      
+      /* Motion - calm and human */
+      --transition-fast: 120ms ease;
+      --transition-normal: 180ms ease;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+      min-height: 100vh;
+      font-size: 16px;
+    }
+    
+    .container {
+      max-width: 720px; /* Max readability width from style book */
+      margin: 0 auto;
+      padding: var(--space-8) var(--space-4);
+    }
+    
+    @media (min-width: 768px) {
+      .container {
+        padding: var(--space-9) var(--space-5);
+      }
+    }
+    
+    @media (min-width: 1024px) {
+      .container {
+        max-width: 800px;
+        padding: var(--space-10) var(--space-8);
+      }
+    }
+    
+    /* Header - minimal */
+    .header {
+      text-align: center;
+      padding: var(--space-8) 0;
+      border-bottom: 1px solid var(--border-color);
+      margin-bottom: var(--space-8);
+    }
+    
+    .emergency-badge {
+      display: inline-block;
+      background: var(--accent-red);
+      color: var(--mist-gray);
+      padding: var(--space-2) var(--space-5);
+      border-radius: var(--radius-pill);
+      font-weight: 600;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: var(--space-5);
+    }
+    
+    .logo {
+      font-size: 1.75rem;
+      font-weight: 700;
+      margin-bottom: var(--space-2);
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-3);
+    }
+    
+    .iran-flag {
+      width: 32px;
+      height: 32px;
+    }
+    
+    .tagline {
+      color: var(--text-secondary);
+      font-size: 1rem;
+    }
+    
+    /* Typography - precise */
+    h1 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      margin-bottom: var(--space-5);
+      color: var(--text-primary);
+      line-height: 1.3;
+    }
+    
+    h2 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin: var(--space-8) 0 var(--space-4);
+      color: var(--text-primary);
+      line-height: 1.4;
+    }
+    
+    h3 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin: var(--space-5) 0 var(--space-3);
+      color: var(--text-primary);
+    }
+    
+    p {
+      margin-bottom: var(--space-4);
+      color: var(--text-secondary);
+    }
+    
+    strong {
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+    
+    a {
+      transition: opacity var(--transition-fast);
+    }
+    
+    a:hover {
+      opacity: 0.8;
+    }
+    
+    /* Stats box - color as signal */
+    .stat-box {
+      background: var(--accent-red);
+      border-radius: var(--radius-card);
+      padding: var(--space-6);
+      margin: var(--space-6) 0;
+      text-align: center;
+    }
+    
+    .stat-number {
+      font-size: 3rem;
+      font-weight: 700;
+      color: var(--mist-gray);
+      line-height: 1;
+    }
+    
+    .stat-label {
+      font-size: 1rem;
+      color: rgba(246, 247, 247, 0.9); /* Mist Gray 90% */
+      margin-top: var(--space-2);
+    }
+    
+    .stat-source {
+      font-size: 0.8rem;
+      color: rgba(246, 247, 247, 0.7); /* Mist Gray 70% */
+      margin-top: var(--space-3);
+    }
+    
+    .stat-source a {
+      color: rgba(246, 247, 247, 0.9); /* Mist Gray 90% */
+    }
+    
+    /* Quote box - typography focused */
+    .quote-box {
+      background: var(--bg-card);
+      padding: var(--space-6) var(--space-6);
+      margin: var(--space-6) 0;
+      border-radius: var(--radius-card);
+      position: relative;
+      border: 1px solid var(--border-color);
+    }
+    
+    .quote-box::before {
+      content: """;
+      position: absolute;
+      top: var(--space-3);
+      left: var(--space-4);
+      font-size: 3rem;
+      color: var(--accent-blue);
+      opacity: 0.3;
+      font-family: Georgia, serif;
+      line-height: 1;
+    }
+    
+    .quote-box::after {
+      content: """;
+      position: absolute;
+      bottom: 0;
+      right: var(--space-4);
+      font-size: 3rem;
+      color: var(--accent-blue);
+      opacity: 0.3;
+      font-family: Georgia, serif;
+      line-height: 1;
+    }
+    
+    .quote-box p {
+      font-style: italic;
+      color: var(--text-secondary);
+      margin-bottom: var(--space-2);
+      position: relative;
+      z-index: 1;
+      font-size: 0.95rem;
+      padding-left: var(--space-5);
+    }
+    
+    .quote-source {
+      color: var(--text-secondary);
+      font-size: 0.8rem;
+      position: relative;
+      z-index: 1;
+      padding-left: var(--space-5);
+      opacity: 0.7;
+    }
+    
+    /* Pillars - card-based identity */
+    .pillars {
+      display: grid;
+      gap: var(--space-3);
+      margin: var(--space-5) 0;
+    }
+    
+    .pillar {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-card);
+      padding: var(--space-5);
+      transition: border-color var(--transition-normal);
+    }
+    
+    .pillar:hover {
+      border-color: rgba(35, 58, 161, 0.25); /* Navy Gray 25% */
+    }
+    
+    .pillar-number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: var(--space-6);
+      height: var(--space-6);
+      background: var(--accent-green);
+      color: var(--bg-primary);
+      border-radius: 50%;
+      font-weight: 600;
+      font-size: 0.8rem;
+      margin-bottom: var(--space-3);
+    }
+    
+    .pillar h3 {
+      margin: 0 0 var(--space-2);
+      color: var(--text-primary);
+      font-size: 1rem;
+    }
+    
+    .pillar p {
+      margin: 0;
+      font-size: 0.875rem;
+    }
+    
+    /* Budget table - minimal design */
+    .budget-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: var(--space-5) 0;
+      background: var(--bg-card);
+      border-radius: var(--radius-card);
+      overflow: hidden;
+      border: 1px solid var(--border-color);
+    }
+    
+    .budget-table th,
+    .budget-table td {
+      padding: var(--space-4);
+      text-align: left;
+      border-bottom: 1px solid var(--border-color);
+    }
+    
+    .budget-table th {
+      background: var(--bg-secondary);
+      font-weight: 600;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-secondary);
+    }
+    
+    .budget-table td {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+    }
+    
+    .budget-table tr:last-child td {
+      border-bottom: none;
+    }
+    
+    .budget-table .percent {
+      color: var(--accent-green);
+      font-weight: 600;
+    }
+    
+    /* CTA section - color as signal */
+    .cta-section {
+      background: var(--bg-card);
+      border: 1px solid var(--accent-green);
+      border-radius: var(--radius-card);
+      padding: var(--space-8);
+      margin: var(--space-8) 0;
+      text-align: center;
+    }
+    
+    .cta-section h2 {
+      margin-top: 0;
+    }
+    
+    .wallet-address {
+      display: inline-block;
+      background: var(--bg-primary);
+      border: 1px solid var(--border-color);
+      padding: var(--space-3) var(--space-5);
+      border-radius: var(--radius-button);
+      font-family: 'SF Mono', 'Monaco', 'Consolas', monospace;
+      font-size: 0.9rem;
+      color: var(--accent-green);
+      margin: var(--space-3) 0;
+      word-break: break-all;
+    }
+    
+    .cta-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-3);
+      justify-content: center;
+      margin-top: var(--space-5);
+    }
+    
+    .cta-button {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: var(--space-3) var(--space-5);
+      border-radius: var(--radius-button);
+      font-weight: 600;
+      font-size: 0.9rem;
+      text-decoration: none;
+      transition: opacity var(--transition-normal);
+    }
+    
+    .cta-button:hover {
+      opacity: 0.85;
+    }
+    
+    .cta-button.primary {
+      background: var(--accent-green);
+      color: var(--bg-primary);
+    }
+    
+    .cta-button.secondary {
+      background: var(--bg-secondary);
+      color: var(--text-primary);
+      border: 1px solid var(--border-color);
+    }
+    
+    /* Footer - minimal */
+    .footer {
+      text-align: center;
+      padding: var(--space-8) 0;
+      border-top: 1px solid var(--border-color);
+      margin-top: var(--space-8);
+    }
+    
+    .footer p {
+      font-size: 1rem;
+      color: var(--text-primary);
+      margin-bottom: var(--space-3);
+    }
+    
+    .footer .small {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+    }
+    
+    /* Accountability section */
+    .accountability {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-card);
+      padding: var(--space-5);
+      margin: var(--space-6) 0;
+    }
+    
+    .accountability ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    
+    .accountability li {
+      padding: var(--space-2) 0;
+      padding-left: var(--space-5);
+      position: relative;
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+    }
+    
+    .accountability li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: var(--accent-green);
+      font-weight: 600;
+    }
+    
+    /* Social short version */
+    .social-version {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-card);
+      padding: var(--space-5);
+      margin: var(--space-6) 0;
+    }
+    
+    .social-version h3 {
+      margin-top: 0;
+      margin-bottom: var(--space-3);
+      color: var(--accent-gold);
+      font-size: 1rem;
+    }
+    
+    .social-version code {
+      display: block;
+      background: var(--bg-primary);
+      padding: var(--space-4);
+      border-radius: var(--radius-button);
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      white-space: pre-wrap;
+      word-break: break-word;
+      font-family: 'SF Mono', 'Monaco', 'Consolas', monospace;
+    }
+    
+    /* Responsive - mobile first */
+    @media (max-width: 640px) {
+      .container {
+        padding: var(--space-4);
+      }
+      
+      .header {
+        padding: var(--space-6) 0;
+      }
+      
+      .logo {
+        font-size: 1.5rem;
+      }
+      
+      h1 {
+        font-size: 1.25rem;
+      }
+      
+      .stat-number {
+        font-size: 2.5rem;
+      }
+      
+      .cta-section {
+        padding: var(--space-5);
+      }
+      
+      .wallet-address {
+        font-size: 0.75rem;
+        padding: var(--space-3);
+      }
+      
+      .pillars {
+        gap: var(--space-3);
+      }
+      
+      .pillar {
+        padding: var(--space-4);
+      }
+    }
+    
+    /* IPFS badge - pill tag */
+    .ipfs-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      padding: var(--space-2) var(--space-4);
+      border-radius: var(--radius-tag);
+      font-size: 0.7rem;
+      color: var(--text-secondary);
+      margin-top: var(--space-4);
+    }
+    
+    .ipfs-badge::before {
+      content: "🌐";
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <div class="emergency-badge">Emergency Call 🚨</div>
+      <div class="logo">
+        <img src="assets/iran-flag.svg" alt="Iran Flag" class="iran-flag">
+        CyberDemocracy.ETH
+        <img src="assets/iran-flag.svg" alt="Iran Flag" class="iran-flag">
+      </div>
+      <p class="tagline">Iran's Digital Civic Defense Network</p>
+    </header>
+    
+    <main>
+      {{ content }}
+    </main>
+    
+    <footer class="footer">
+      <p><strong>The world failed Rwanda and Srebrenica. It will not fail Iran.</strong></p>
+      <p class="small">Under R2P, we protect civilians by empowering them.</p>
+      <div class="ipfs-badge">Hosted on IPFS - Censorship Resistant</div>
+    </footer>
+  </div>
+</body>
+</html>
